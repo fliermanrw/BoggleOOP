@@ -60,7 +60,17 @@ public class BoggleController {
     }
 
     public void Testerx(ActionEvent actionEvent) {
-        System.out.println(boggleboardfield.getChildren());
+        System.out.println("Lettertje: " + boggleboardfield.getChildren().get(4));
+
+        Node node = boggleboardfield.getChildren().get(4);
+
+        if(node instanceof Button){
+            Button button = (Button) node;
+            System.out.println(button.getText());
+        } else{
+            System.out.println("niks kunnen vinden x");
+        }
+
     }
 }
 

@@ -41,7 +41,7 @@ public class startSearch {
 
     }
 
-    public Coords[] findWord(String word){
+   /* public Coords[] findWord(String word){
         List<Coords> options = findLetter(word.charAt(0));
 
         for(int i=0; i <options.size(); i++){
@@ -77,9 +77,9 @@ public class startSearch {
         }
 
         return null;
-    }
+    }*/
 
-    public List<Coords> findLetter(char letter) {
+    /*public List<Coords> findLetter(char letter) {
         List<Coords> options = new ArrayList<Coords>();
 
         for (int x = 0; x < X; x++) {
@@ -120,5 +120,5 @@ public class startSearch {
             }
         }
         return options;
-    }
+    }*/
 }
