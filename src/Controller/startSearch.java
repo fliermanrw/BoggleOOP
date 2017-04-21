@@ -5,33 +5,54 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.nio.file.Files;
+import java.util.Scanner;
 
 /**
  * Created by Robert on 21-4-2017.
  */
 public class startSearch {
-    private Coords[] currentWord;
-    public void start() {
+    private ArrayList<String> WordList = new ArrayList<>();
+
+    public void WordList() throws IOException {
+        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
+        while(sc.hasNext()){
+            String line = sc.nextLine();
+            WordList.add(line);
+            System.out.println("added " + line);
+        }
+        System.out.println(WordList.size());
+    }
+
+
+    ////////// ROBERTS CODE
+    /*public void start() {
         Task<Void> runTask = new Task<Void>() {
             @Override
             public Void call() throws Exception{
                 BufferedReader br = new BufferedReader(new FileReader("dict.txt"));
                 String line;
+
                 while((line = br.readLine()) != null){
                     line = line.toUpperCase();
 
 
 //                    currentWord = findWord(line);
                     if(currentWord != null){
-                        System.out.println(currentWord.toString());
+                        System.out.println(Arrays.toString(currentWord));
 //                        Platform.runLater(() -> updateDisplay());
 //                        Thread.sleep(2000);
                     }
                 }
                 br.close();
+
                 return null;
             }
         };
@@ -39,7 +60,10 @@ public class startSearch {
         th.setDaemon(true);
         th.start();
 
-    }
+    }*/
+
+
+
 
    /* public Coords[] findWord(String word){
         List<Coords> options = findLetter(word.charAt(0));

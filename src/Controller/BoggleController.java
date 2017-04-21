@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.BoggleModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -7,21 +8,34 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
 
 public class BoggleController {
+    startSearch startSearch;
+    BoggleModel boggleModel;
     private final int fieldSize = 4;
     public GridPane boggleboardfield;
     public Pane wordfield;
 
+    ArrayList<Integer> exclusions = new ArrayList<>();
 
+    public BoggleController(){
+        this.boggleModel = new BoggleModel();
+        this.startSearch = new startSearch();
+    }
 
     @FXML
     protected void initialize() {
         generateNewBoard();
+        this.startSearch = new startSearch();
+    }
+
+    public GridPane getBoggleBoardField(){
+        return boggleboardfield;
     }
 
 
@@ -42,7 +56,6 @@ public class BoggleController {
     }
 
 
-
     private Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -53,16 +66,19 @@ public class BoggleController {
     }
 
 
-    public void SearchStart(ActionEvent actionEvent) {
-        //TODO xx
+    public void SearchStart() throws IOException {
+        startSearch.WordList();
+        boggleModel.print();
+
+
     }
 
-    public void ResetBoard(ActionEvent actionEvent) {
+    public void ResetBoard() {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
     }
 
-    public void Testerx(ActionEvent actionEvent) {
+    public void Testerx() {
         System.out.println("Lettertje: " + boggleboardfield.getChildren().get(4));
 
         Node node = boggleboardfield.getChildren().get(4);
@@ -73,22 +89,28 @@ public class BoggleController {
         } else{
             System.out.println("Niks kunnen vinden x");
         }
-        System.out.println("xxxxxx");
+        System.out.println(" - ");
+
+        // Make sure the ArrayList is not empty b
+        exclusions.add(fieldSize + 1);
+
         System.out.println(findNeighbours(9));
-        //System.out.println(findNeighbours(11));
+        System.out.println(findNeighbours(9));
+
 
     }
 
-    private ArrayList<Integer> findNeighbours(int id) {
+    private ArrayList<String> findNeighbours(int id) {
         int temp;
-        HashSet noDups = new HashSet();
+        HashSet<Integer> noDups = new HashSet<>();
+
 
         // Linkerkant checks
-        if((id % fieldSize == 0)){
+        if ((id % fieldSize == 0)) {
 
 
             //linksboven
-            if(id < fieldSize) {
+            if (id < fieldSize) {
                 temp = id + 1;
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
@@ -103,7 +125,7 @@ public class BoggleController {
             }
 
             // linksonder
-            if(id > (boggleboardfield.getChildren().size() - (fieldSize + 1))) {
+            if (id > (boggleboardfield.getChildren().size() - (fieldSize + 1))) {
                 temp = id - fieldSize;
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
@@ -120,7 +142,7 @@ public class BoggleController {
             }
 
             //linksmidden
-            if(!(id < fieldSize-1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))){
+            if (!(id < fieldSize - 1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))) {
                 System.out.println("hier komt ie");
                 temp = id - fieldSize;
                 noDups.add(temp);
@@ -143,15 +165,13 @@ public class BoggleController {
                 System.out.println("Added: " + temp);
 
 
-
-
             }
         }
 
         //Rechterzijkant Check
-        if((id % fieldSize == fieldSize-1)){
+        if ((id % fieldSize == fieldSize - 1)) {
             System.out.println("hier mag ie komen!");
-            if(id < fieldSize + 1) {
+            if (id < fieldSize + 1) {
                 temp = id - 1;
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
@@ -165,7 +185,7 @@ public class BoggleController {
                 System.out.println("Added: " + temp);
             }
 
-            if(id > (boggleboardfield.getChildren().size() -(fieldSize + 1))) {
+            if (id > (boggleboardfield.getChildren().size() - (fieldSize + 1))) {
                 temp = id - 1;
                 noDups.add(temp);
                 System.out.println("added: " + temp);
@@ -174,12 +194,12 @@ public class BoggleController {
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
 
-                temp = id - (fieldSize -1);
+                temp = id - (fieldSize - 1);
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
             }
 
-            if(!(id < fieldSize + 1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))){
+            if (!(id < fieldSize + 1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))) {
                 temp = id - (fieldSize + 1);
                 noDups.add(temp);
                 System.out.println("Added: " + temp);
@@ -201,12 +221,11 @@ public class BoggleController {
                 System.out.println("Added: " + temp);
 
 
-
             }
         }
 
         // Binnengetallen...
-        if((id > fieldSize-1) && (id < (boggleboardfield.getChildren().size() - fieldSize)) && ((id % fieldSize != 0)) && ((id % fieldSize != fieldSize -1))){
+        if ((id > fieldSize - 1) && (id < (boggleboardfield.getChildren().size() - fieldSize)) && ((id % fieldSize != 0)) && ((id % fieldSize != fieldSize - 1))) {
             temp = id - (fieldSize + 1);
             noDups.add(temp);
             System.out.println("added: " + temp);
@@ -215,7 +234,7 @@ public class BoggleController {
             noDups.add(temp);
             System.out.println("added: " + temp);
 
-            temp = id - (fieldSize -1);
+            temp = id - (fieldSize - 1);
             noDups.add(temp);
             System.out.println("added: " + temp);
 
@@ -241,7 +260,7 @@ public class BoggleController {
         }
 
         // Bovengetallen
-        if((id < fieldSize) && (id % fieldSize != 0) && id % fieldSize != fieldSize-1){
+        if ((id < fieldSize) && (id % fieldSize != 0) && id % fieldSize != fieldSize - 1) {
             temp = id - 1;
             noDups.add(temp);
             System.out.println("added: " + temp);
@@ -264,7 +283,7 @@ public class BoggleController {
         }
 
         // Ondergetallen
-        if((id > (boggleboardfield.getChildren().size() - fieldSize)) && (id % fieldSize != 0) && id % fieldSize != fieldSize-1){
+        if ((id > (boggleboardfield.getChildren().size() - fieldSize)) && (id % fieldSize != 0) && id % fieldSize != fieldSize - 1) {
             temp = id - (fieldSize + 1);
             noDups.add(temp);
             System.out.println("added: " + temp);
@@ -288,10 +307,23 @@ public class BoggleController {
 
         }
 
+
         System.out.println("xxxxxxxxxxxxxxxxxxxxx");
         System.out.println(boggleboardfield.getChildren().size());
 
-        return new ArrayList<Integer>(noDups);
+        ArrayList<String> neighbours = new ArrayList<>();
+
+        // Omzetten naar letters
+        for (Object value : noDups) {
+            Button button = (Button) boggleboardfield.getChildren().get((Integer) value);
+            neighbours.add(button.getText());
+
+        }
+
+        exclusions.add(id);
+        return neighbours;
+
     }
+
 }
 
