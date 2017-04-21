@@ -23,6 +23,7 @@ public class startSearch {
                 while((line = br.readLine()) != null){
                     line = line.toUpperCase();
 
+
 //                    currentWord = findWord(line);
                     if(currentWord != null){
                         System.out.println(currentWord.toString());
@@ -40,21 +41,21 @@ public class startSearch {
 
     }
 
-//    public Coords[] findWord(String word){
-//        List<Coords> options = findLetter(word.charAt(0));
-//
-//        for(int i=0; i <options.size(); i++){
-//            List<Coords> chain = new ArrayList<Coords>();
-//
-//            chain.add(options.get(i));
-//
-//            chain = findChain(chain, word, 1);
-//
-//            if (chain != null && chain.size() == word.length()) {
-//                Coords[] r = new Coords[chain.size()];
-//                return chain.toArray(r);
-//            }
-//        }
-//        return null;
-//    }
+    public Coords[] findWord(String word){
+        List<Coords> options = findLetter(word.charAt(0));
+
+        for(int i=0; i <options.size(); i++){
+            List<Coords> chain = new ArrayList<Coords>();
+
+            chain.add(options.get(i));
+
+            chain = findChain(chain, word, 1);
+
+            if (chain != null && chain.size() == word.length()) {
+                Coords[] r = new Coords[chain.size()];
+                return chain.toArray(r);
+            }
+        }
+        return null;
+    }
 }
