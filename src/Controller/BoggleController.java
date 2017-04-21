@@ -38,7 +38,7 @@ public class BoggleController {
         }
     }
 
-    
+
 
     private Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -57,6 +57,10 @@ public class BoggleController {
     public void ResetBoard(ActionEvent actionEvent) {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
+    }
+
+    public void Testerx(ActionEvent actionEvent) {
+        System.out.println(boggleboardfield.getChildren());
     }
 }
 
