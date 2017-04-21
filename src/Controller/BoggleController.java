@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -14,8 +15,13 @@ public class BoggleController {
     public Pane wordfield;
 
 
+
     @FXML
     protected void initialize() {
+        generateNewBoard();
+    }
+
+    private void generateNewBoard(){
         for (int row = 0; row < 4; row++) {
             boggleboardfield.addRow(row);
             for (int col = 0; col < 4; col++) {
@@ -31,17 +37,23 @@ public class BoggleController {
         }
     }
 
-    public Character assignLetter(){
+    private Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
         Random rd = new Random();
 
-        Character returnLetter = letters.charAt(rd.nextInt(letters.length()));
-
-        return returnLetter;
+        return letters.charAt(rd.nextInt(letters.length()));
     }
 
 
+    public void SearchStart(ActionEvent actionEvent) {
+        //TODO xx
+    }
+
+    public void ResetBoard(ActionEvent actionEvent) {
+        boggleboardfield.getChildren().clear();
+        generateNewBoard();
+    }
 }
 
