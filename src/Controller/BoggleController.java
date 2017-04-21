@@ -1,17 +1,18 @@
 package Controller;
 
 import Model.BoggleModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class BoggleController {
@@ -20,8 +21,19 @@ public class BoggleController {
     private final int fieldSize = 4;
     public GridPane boggleboardfield;
     public Pane wordfield;
+    ArrayList<String> wordList = new ArrayList<String>();
 
     ArrayList<Integer> exclusions = new ArrayList<>();
+
+    public void WordList() throws IOException {
+        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
+        while(sc.hasNext()){
+            String line = sc.nextLine();
+            wordList.add(line);
+            //System.out.println("added " + line);
+        }
+        System.out.println(wordList.size());
+    }
 
     public BoggleController(){
         this.boggleModel = new BoggleModel();
@@ -67,8 +79,11 @@ public class BoggleController {
 
 
     public void SearchStart() throws IOException {
-        startSearch.WordList();
-        boggleModel.print();
+        if(wordList.isEmpty()){
+            WordList();
+        }
+
+        inWordList();
 
 
     }
@@ -325,5 +340,23 @@ public class BoggleController {
 
     }
 
+    // Kijken welke woorden matchen met de eerste letter (id.getText())
+    // Als
+    private void inWordList() {
+        Button button = (Button) boggleboardfield.getChildren().get(1);
+        Character x = button.getText().charAt(0);
+        x = Character.toLowerCase(x);
+        System.out.println(x);
+        System.out.println(wordList.get(0).charAt(0));
+
+
+        for (String aWordList : wordList) {
+            System.out.println("hier gaat het nog goed!");
+            if (aWordList.charAt(0) == x) {
+                //System.out.println(aWordList);
+            }
+        }
+    }
 }
+
 

@@ -31,6 +31,17 @@ public class startSearch {
         System.out.println(WordList.size());
     }
 
+    public ArrayList<String> getWordList() throws IOException {
+        if(WordList == null){
+            WordList();
+        }
+        return WordList;
+    }
+
+
+
+
+
 
     ////////// ROBERTS CODE
     /*public void start() {
