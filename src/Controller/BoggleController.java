@@ -21,6 +21,7 @@ public class BoggleController {
         generateNewBoard();
     }
 
+
     private void generateNewBoard(){
         for (int row = 0; row < 4; row++) {
             boggleboardfield.addRow(row);
@@ -30,12 +31,14 @@ public class BoggleController {
                 a.setMinHeight(100.0);
                 a.setText(String.valueOf(assignLetter()));
 
-                //a.setId(Integer.toString(boggleboardfield.rowColToInt(row, col)));
+                a.setId(String.valueOf(row * 4 + col));
                 boggleboardfield.addColumn(col, a);
             }
 
         }
     }
+
+    
 
     private Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
