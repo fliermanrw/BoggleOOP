@@ -34,6 +34,7 @@
      <Pane fx:id="wordfield" layoutY="25" prefHeight="400.0" prefWidth="120.0" style="-fx-background-color: lightgrey;">
          <children>
              <Button onAction="#SearchStart" layoutX="15.0" layoutY="15.0" prefWidth="90" prefHeight="50" mnemonicParsing="false" text="Start search" />
+             <Button onAction="#Testerx" layoutX="15" layoutY="120" prefWidth="90" prefHeight="50" text="Tester" />
              <Label layoutX="15.0" layoutY="70.0" prefHeight="17.0" prefWidth="85.0" text="Found words:" />
 
          </children></Pane>
