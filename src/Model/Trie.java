@@ -1,7 +1,13 @@
 package Model;
 
+import javafx.scene.*;
+import Controller.BoggleController;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+
+import static jdk.nashorn.internal.objects.Global.print;
 
 /**
  * Created by Ryan on 26-4-2017.
@@ -13,6 +19,8 @@ import java.util.Set;
 public class Trie {
     private TrieNode root;
     private int size;
+    private ArrayList<String> wordList;
+    //private BoggleController boggleController;
 
     public Trie(){
         root = new TrieNode();
@@ -58,25 +66,27 @@ public class Trie {
             return false;
     }
 
-    // FUNCTIE
+    // Check if the character(s) are present in the Trie
+    // @TODO hij vindt nu ook nog dat "appe" goed is als "appel" een toegevoegd woord is..
     public boolean find(String string) {
         Map<Character, TrieNode> children = root.getChildren();
-        System.out.println("hier ben ik nog oké");
         TrieNode t = null;
+        String endWord = "";
 
-        System.out.println("string lengte == " + string.length());
+        System.out.println("String length = " + string.length());
         for(int i = 0; i < string.length(); i++){
-            System.out.println("hier moet ik xx keer iets doen");
             char c = string.charAt(i);
             if(children.containsKey(c)) {
                 System.out.println(c);
                 t = children.get(c);
                 children = t.getChildren();
+                endWord += String.valueOf(c);
             } else {
                 return false;
             }
         }
-        
+
+        System.out.println(endWord);
         return true;
     }
     
@@ -131,6 +141,10 @@ public class Trie {
         return size;
     }
 
+    public void test(){
+        System.out.println(root.getChildren());
+    }
+    
 }
 
 

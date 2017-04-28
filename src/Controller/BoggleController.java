@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
+import static jdk.nashorn.internal.objects.Global.print;
+
 
 public class BoggleController {
     startSearch startSearch;
@@ -25,16 +27,6 @@ public class BoggleController {
 
     ArrayList<Integer> exclusions = new ArrayList<>();
     Trie trie = new Trie();
-
-    public void WordList() throws IOException {
-        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
-        while(sc.hasNext()){
-            String line = sc.nextLine();
-            //wordList.add(line); -- temp
-            trie.add(line);
-        }
-        System.out.println(wordList.size());
-    }
 
     public BoggleController(){
         this.boggleModel = new BoggleModel();
@@ -48,10 +40,23 @@ public class BoggleController {
         this.startSearch = new startSearch();
     }
 
+    // creates a new trie with the words
+    public void WordList() throws IOException {
+        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
+        while(sc.hasNext()){
+            String line = sc.nextLine();
+            wordList.add(line); // still here to check if real word
+            trie.add(line);
+        }
+
+    }
+
     public GridPane getBoggleBoardField(){
         return boggleboardfield;
     }
-
+    public ArrayList<String> getWordList(){
+        return wordList;
+    }
 
     private void generateNewBoard(){
         for (int row = 0; row < fieldSize; row++) {
@@ -105,8 +110,7 @@ public class BoggleController {
         // Make sure the ArrayList is not empty b
         exclusions.add(fieldSize + 1);
 
-        System.out.println(findNeighbours(9));
-        System.out.println(findNeighbours(9));
+        getAllNeighbours();
 
 
     }
@@ -346,8 +350,19 @@ public class BoggleController {
 
 
         System.out.println(trie.find("zwolle"));
+        trie.test();
 
     }
+
+    public void getAllNeighbours(){
+        ArrayList<ArrayList<String>> allNeighbours = new ArrayList<>();
+        for(int count = 0; count < (fieldSize * fieldSize); count++) {
+            allNeighbours.add(findNeighbours(count));
+            System.out.println(findNeighbours(count));
+        }
+    }
+
+
 
 }
 

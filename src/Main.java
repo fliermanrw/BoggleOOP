@@ -1,3 +1,5 @@
+
+import Model.Trie;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -5,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
 
     //Mooie toevoeging
 
@@ -18,6 +21,18 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
         launch(args);
+        Trie trie = new Trie();
+        System.out.println((trie.add("appel")));
+        System.out.println((trie.add("xx")));
+
+        System.out.println("now finding..");
+
+        System.out.println(trie.find("appel"));
+        System.out.println(trie.find("appe"));
+        //System.out.println(trie.find("a"));
+
+
     }
 }
