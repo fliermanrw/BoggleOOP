@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.BoggleModel;
+import Model.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,13 +24,14 @@ public class BoggleController {
     ArrayList<String> wordList = new ArrayList<String>();
 
     ArrayList<Integer> exclusions = new ArrayList<>();
+    Trie trie = new Trie();
 
     public void WordList() throws IOException {
         Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
-            wordList.add(line);
-            //System.out.println("added " + line);
+            //wordList.add(line); -- temp
+            trie.add(line);
         }
         System.out.println(wordList.size());
     }
@@ -41,8 +42,9 @@ public class BoggleController {
     }
 
     @FXML
-    protected void initialize() {
+    protected void initialize() throws IOException {
         generateNewBoard();
+        WordList();
         this.startSearch = new startSearch();
     }
 
@@ -71,18 +73,12 @@ public class BoggleController {
     private Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-
         Random rd = new Random();
-
         return letters.charAt(rd.nextInt(letters.length()));
     }
 
 
     public void SearchStart() throws IOException {
-        if(wordList.isEmpty()){
-            WordList();
-        }
-
         inWordList();
 
 
@@ -347,16 +343,12 @@ public class BoggleController {
         Character x = button.getText().charAt(0);
         x = Character.toLowerCase(x);
         System.out.println(x);
-        System.out.println(wordList.get(0).charAt(0));
 
 
-        for (String aWordList : wordList) {
-            System.out.println("hier gaat het nog goed!");
-            if (aWordList.charAt(0) == x) {
-                //System.out.println(aWordList);
-            }
-        }
+        System.out.println(trie.find("zwolle"));
+
     }
+
 }
 
 
