@@ -24,14 +24,17 @@ public class Main extends Application {
 
         launch(args);
         Trie trie = new Trie();
+
+        //System.out.println((trie.add("xx")));
+
+        //System.out.println("now finding..");
+
+        //System.out.println(trie.find("appel"));
+
+
         System.out.println((trie.add("appel")));
-        System.out.println((trie.add("xx")));
-
-        System.out.println("now finding..");
-
-        System.out.println(trie.find("appel"));
         System.out.println(trie.find("appe"));
-        //System.out.println(trie.find("a"));
+
 
 
     }

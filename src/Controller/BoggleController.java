@@ -86,7 +86,6 @@ public class BoggleController {
     public void SearchStart() throws IOException {
         inWordList();
 
-
     }
 
     public void ResetBoard() {
@@ -108,6 +107,7 @@ public class BoggleController {
         System.out.println(" - ");
 
         // Make sure the ArrayList is not empty b
+        // not yet used
         exclusions.add(fieldSize + 1);
 
         getAllNeighbours();
@@ -354,6 +354,8 @@ public class BoggleController {
 
     }
 
+
+    // tests to see the neighbours
     public void getAllNeighbours(){
         ArrayList<ArrayList<String>> allNeighbours = new ArrayList<>();
         for(int count = 0; count < (fieldSize * fieldSize); count++) {
