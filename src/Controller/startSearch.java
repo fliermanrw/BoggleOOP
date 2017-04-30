@@ -22,7 +22,8 @@ public class startSearch {
     private ArrayList<String> WordList = new ArrayList<>();
 
     public void WordList() throws IOException {
-        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
+        //Path Robert: C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/OOP3 inlever/BoggleOOP/src/dict.txt"
+        Scanner sc = new Scanner(new File("C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/OOP3 inlever/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
             WordList.add(line);
@@ -32,10 +33,12 @@ public class startSearch {
     }
 
     public ArrayList<String> getWordList() throws IOException {
-        if(WordList == null){
-            WordList();
-        }
-        return WordList;
+
+           if (WordList == null) {
+               WordList();
+           }
+           return WordList;
+
     }
 
 
