@@ -123,6 +123,8 @@ public class Boggler {
                     }
                 System.out.println("x");
                 System.out.println(chars[counter]);
+
+                //TODO dit gaat fout
                     //node = node.nextNodes[chars[counter]];
                     counter++;
             }
