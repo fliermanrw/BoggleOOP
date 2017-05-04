@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 public class BoggleController {
     BoggleModel boggleModel;
+    Boggler boggler;
     private final int fieldSize = 4;
     public GridPane boggleboardfield;
     public Pane wordfield;
@@ -30,7 +31,8 @@ public class BoggleController {
 
     @FXML
     protected void initialize() throws IOException {
-        generateNewBoard();
+        //boggler.readBoard();
+        //generateNewBoard();
         WordList();
     }
 
@@ -76,7 +78,7 @@ public class BoggleController {
     }
 
 
-    private Character assignLetter(){
+    public Character assignLetter(){
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         Random rd = new Random();
@@ -110,20 +112,28 @@ public class BoggleController {
     // Als
     private void inWordList() {
         for(int count = 0; count < fieldSize * fieldSize; count ++){
+
             ArrayList<Integer> localNeighbours = neighbours.get(count);
+
+            //converts arraylist with id numbers to assigned letters
             Button button = (Button) boggleboardfield.getChildren().get(count);
             Character startChar = button.getText().charAt(0);
 
+            // tests
             System.out.println("Testing where we fail. StartChar = " + startChar);
             System.out.println(trie.find(String.valueOf(startChar) + "E"));
 
 
             //TODO HIER MOET DE RECURSIE GEDAAN WORDEN / OPGEROEPEN WORDEN
             if(trie.find(String.valueOf(startChar))){
-                for(int nbCount = 0; nbCount < localNeighbours.size(); nbCount++){
+                for(int neighbourCount = 0; neighbourCount < localNeighbours.size(); neighbourCount++){
                         System.out.println("In de tree ergens..");
+                        if(trie.find(String.valueOf(startChar+localNeighbours.get(neighbourCount)))){
+                            localNeighbours.get(neighbourCount);
+                        }
 
-                        System.out.println(trie.find(String.valueOf(startChar + localNeighbours.get(nbCount))));
+
+                        System.out.println(trie.find(String.valueOf(startChar + localNeighbours.get(neighbourCount))));
                 }
             }
 
