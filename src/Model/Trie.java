@@ -3,6 +3,7 @@ package Model;
 import javafx.scene.*;
 import Controller.BoggleController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -19,13 +20,18 @@ import static jdk.nashorn.internal.objects.Global.print;
 public class Trie {
     private TrieNode root;
     private int size;
-    private ArrayList<String> wordList;
-    //private BoggleController boggleController;
+    private BoggleController boggleController;
+    //private ArrayList<String> wordList = boggleController.getWordList();
+
 
     public Trie(){
         root = new TrieNode();
         size = 0;
     }
+
+    /*public void printwordlist(){
+        System.out.println(wordList);
+    }*/
 
     // Adds a new word to the Trie
     public boolean add(String word){
@@ -70,23 +76,29 @@ public class Trie {
     // @TODO hij vindt nu ook nog dat "appe" goed is als "appel" een toegevoegd woord is..
     public boolean find(String string) {
         Map<Character, TrieNode> children = root.getChildren();
+        string = string.toLowerCase();
         TrieNode t = null;
         String endWord = "";
 
-        System.out.println("String length = " + string.length());
+        //System.out.println("String length = " + string.length() + " - " + string);
+
         for(int i = 0; i < string.length(); i++){
             char c = string.charAt(i);
+
             if(children.containsKey(c)) {
                 System.out.println(c);
                 t = children.get(c);
                 children = t.getChildren();
                 endWord += String.valueOf(c);
+                /*if(wordList.contains(endWord)){
+                    System.out.println(endWord);
+                }*/
             } else {
                 return false;
             }
         }
 
-        System.out.println(endWord);
+        System.out.println("to check..:" + endWord);
         return true;
     }
     
@@ -94,7 +106,7 @@ public class Trie {
         return findNode(root, string);
     }
 
-    // DINGEN
+    // Wat doet ie hier precies?
     private TrieNode getChild(TrieNode trie, Character character) {
         return trie.getChildren().get(character);
 
