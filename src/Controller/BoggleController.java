@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -11,46 +10,46 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Scanner;
 
 
 
 public class BoggleController {
-    BoggleModel boggleModel;
-    Boggler boggler;
     private final int fieldSize = 4;
+    BoggleModel boggleModel;
     public GridPane boggleboardfield;
     public Pane wordfield;
-    ArrayList<String> wordList = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> neighbours = new ArrayList<>();
+    HashSet<String> wordList = new HashSet<>();
+    ArrayList<ArrayList<Integer>> neighboursLocations = new ArrayList<>();
+    ArrayList<ArrayList<Character>> neighboursCharacter = new ArrayList<>();
 
-    ArrayList<Integer> exclusions = new ArrayList<>();
+
     Trie trie = new Trie();
     private boolean notFalse;
 
     @FXML
     protected void initialize() throws IOException {
-        //boggler.readBoard();
-        //generateNewBoard();
+        generateNewBoard();
         WordList();
     }
 
-    // creates a new trie with the words
+    public BoggleController(){
+         this.boggleModel = new BoggleModel(this, fieldSize);
+
+    }
+
+
     public void WordList() throws IOException {
         Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
             wordList.add(line); // still here to check if real word
-            trie.add(line);
+
         }
 
     }
 
-    public GridPane getBoggleBoardField(){
-        return boggleboardfield;
-    }
-    public ArrayList<String> getWordList(){
+    public HashSet<String> getWordList(){
         if(wordList.isEmpty()){
             try {
                 WordList();
@@ -61,51 +60,42 @@ public class BoggleController {
         return wordList;
     }
 
+
+
     private void generateNewBoard(){
-        for (int row = 0; row < fieldSize; row++) {
-            boggleboardfield.addRow(row);
-            for (int col = 0; col < fieldSize; col++) {
+        char[][] board = boggleModel.getBoard();
+        for (int x = 0; x < fieldSize; x++) {
+            boggleboardfield.addRow(x);
+            for (int y = 0; y < fieldSize; y++) {
                 Button a = new Button();
                 a.setMinWidth(70.0);
                 a.setMinHeight(70.0);
-                a.setText(String.valueOf(assignLetter()));
+                a.setText(String.valueOf(boggleModel.assignLetter()));
 
-                a.setId(String.valueOf(row * fieldSize + col));
-                boggleboardfield.addColumn(col, a);
+                a.setId(String.valueOf(x * fieldSize + y));
+                boggleboardfield.addColumn(y, a);
             }
 
         }
+
+        System.out.println(board);
     }
 
 
-    public Character assignLetter(){
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        Random rd = new Random();
-        return letters.charAt(rd.nextInt(letters.length()));
-    }
-
-
-    public void SearchStart() throws IOException {
+    public void SearchStartButton() throws IOException {
         getAllNeighbours();
         inWordList();
 
     }
 
-    public void ResetBoard() {
+    public void ResetBoardButton() {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
     }
 
-    public void Testerx() {
-        System.out.println("Lettertje: " + boggleboardfield.getChildren().get(4));
-        Node node = boggleboardfield.getChildren().get(4);
-
-        getAllNeighbours();
-        System.out.println(neighbours);
-
+    public void TestButton() {
+        //TODO ieks
     }
-
 
 
     // Kijken welke woorden matchen met de eerste letter (id.getText())
@@ -113,7 +103,7 @@ public class BoggleController {
     private void inWordList() {
         for(int count = 0; count < fieldSize * fieldSize; count ++){
 
-            ArrayList<Integer> localNeighbours = neighbours.get(count);
+            ArrayList<Integer> localNeighbours = neighboursLocations.get(count);
 
             //converts arraylist with id numbers to assigned letters
             Button button = (Button) boggleboardfield.getChildren().get(count);
@@ -141,21 +131,13 @@ public class BoggleController {
 
         }
 
-
-        //System.out.println(x);
-
-
-        //System.out.println(trie.find("appe"));
-        //trie.test();
-
     }
 
 
     // tests to see the neighbours
     public void getAllNeighbours(){
         for(int count = 0; count < (fieldSize * fieldSize); count++) {
-            neighbours.add(findNeighbours(count));
-            System.out.println(findNeighbours(count));
+            neighboursLocations.add(findNeighbours(count));
         }
     }
 
@@ -368,19 +350,33 @@ public class BoggleController {
 
         System.out.println("xxxxxxxxxxxxxxxxxxxxx");
 
-        ArrayList<Integer> neighbour = new ArrayList<>();
+        ArrayList<Integer> neighbours = new ArrayList<>();
 
         // Omzetten naar letters
         for (Object value : noDups) {
             Button button = (Button) boggleboardfield.getChildren().get((Integer) value);
-            neighbour.add(Integer.valueOf(button.getId()));
+            neighbours.add(Integer.valueOf(button.getId()));
 
         }
 
-        return neighbour;
+        return neighbours;
 
     }
 
+    public ArrayList<Character> neighbourToCharacter(ArrayList<Integer> neighbourLocations){
+        ArrayList<Character> neighbourCharacter = new ArrayList<>();
+        for (Integer neighbourLocation : neighbourLocations) {
+            Button button = (Button) boggleboardfield.getChildren().get(neighbourLocation);
+            String temp = button.getText();
+            neighbourCharacter.add(temp.charAt(0));
+        }
+
+        return neighbourCharacter;
+    }
+
+    public int getFieldSize() {
+        return fieldSize;
+    }
 }
 
 

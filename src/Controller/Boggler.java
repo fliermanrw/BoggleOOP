@@ -100,22 +100,25 @@ public class Boggler {
 
 
 
-        public void insert(final String word) {
+        public boolean insert(final String word) {
             DictNode node = root;
 
+            if(node == null || word == null){
+                return false;
+            }
+
             char[] chars = word.toCharArray();
-            System.out.println(node.nextNodes.length);
 
             for (int counter = 0; counter < chars.length; counter++) {
                     //System.out.println("hier ook nog");
 
 
-                    if (node.nextNodes == null) {
-                        node.nextNodes[chars[counter]] = new DictNode(chars[counter]);
+                    if (node.nextNodes != null) {
+                        node.nextNodes = new DictNode[chars[counter]];
                         System.out.println("inserted?");
 
                         if (counter == chars.length - 1) {
-                            node.nextNodes[chars[counter]].wordEnd = true;
+                            //node.nextNodes[chars[counter]].wordEnd = true;
                             System.out.println("endword");
                         }
                     } else{
@@ -124,12 +127,13 @@ public class Boggler {
                 System.out.println("x");
                 System.out.println(chars[counter]);
 
-                //TODO dit gaat fout
-                    //node = node.nextNodes[chars[counter]];
+                //@TODO dit gaat fout
+                    //node = node.nextNodes[chars[counter - "a"]];
                     counter++;
+
             }
 
-
+            return true;
         }
 
 
@@ -204,20 +208,20 @@ public class Boggler {
 
 
     public void toDict() throws IOException {
-       /* Scanner sc = new Scanner(new File(""));
-        root = new DictNode();
+       Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
+        root = new DictNode('\0');
         while(sc.hasNext()){
             String line = sc.nextLine();
             root.insert(line);
-        }*/
+        }
 
-        String dictFile = "C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt";
+        /*String dictFile = "C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt";
         List<String> words = Files.readAllLines(new File(dictFile).toPath(), StandardCharsets.UTF_8);
 
         root = new DictNode('\0');
         for (String word : words) {
             root.insert(word);
-        }
+        }*/
 
     }
 }
