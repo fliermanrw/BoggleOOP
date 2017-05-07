@@ -4,6 +4,7 @@ import Controller.BoggleController;
 import Controller.BoggleController.*;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -11,12 +12,15 @@ import java.util.Random;
  * Created by Ryan on 21-4-2017.
  */
 public class BoggleModel {
-    BoardModel boardModel;
-    BoggleController boggleController;
+    private BoardModel boardModel;
+    private BoggleController boggleController;
+    private NeighbourModel neighbourModel;
 
     public BoggleModel(BoggleController boggleController, int fieldsize){
-        this.boardModel = new BoardModel(this,fieldsize);
         this.boggleController = boggleController;
+
+        this.boardModel = new BoardModel(this, fieldsize);
+        this.neighbourModel = new NeighbourModel(this, fieldsize);
     }
 
     public Character assignLetter(){
@@ -29,6 +33,16 @@ public class BoggleModel {
     public char[][] getBoard(){
         return boardModel.getBoard();
     }
+
+    public void fillBoard(){
+        boardModel.fillBoard();
+    }
+
+    public ArrayList<Integer> getNeighbours(int id){
+        return neighbourModel.getNeighbours(id);
+    }
+
+
 
 
 

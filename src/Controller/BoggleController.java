@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -22,20 +23,21 @@ public class BoggleController {
     HashSet<String> wordList = new HashSet<>();
     ArrayList<ArrayList<Integer>> neighboursLocations = new ArrayList<>();
     ArrayList<ArrayList<Character>> neighboursCharacter = new ArrayList<>();
+    char[][] board;
 
 
     Trie trie = new Trie();
-    private boolean notFalse;
 
     @FXML
     protected void initialize() throws IOException {
+        boggleModel.fillBoard();
         generateNewBoard();
         WordList();
     }
 
     public BoggleController(){
-         this.boggleModel = new BoggleModel(this, fieldSize);
-
+        this.boggleModel = new BoggleModel(this, fieldSize);
+        this.board = boggleModel.getBoard();
     }
 
 
@@ -63,22 +65,23 @@ public class BoggleController {
 
 
     private void generateNewBoard(){
+        // get the generated char[][] board and create the same view in buttons
         char[][] board = boggleModel.getBoard();
+
+        //loop and create the buttons
         for (int x = 0; x < fieldSize; x++) {
             boggleboardfield.addRow(x);
             for (int y = 0; y < fieldSize; y++) {
                 Button a = new Button();
                 a.setMinWidth(70.0);
                 a.setMinHeight(70.0);
-                a.setText(String.valueOf(boggleModel.assignLetter()));
+                a.setText(String.valueOf(board[x][y]));
 
                 a.setId(String.valueOf(x * fieldSize + y));
                 boggleboardfield.addColumn(y, a);
             }
 
         }
-
-        System.out.println(board);
     }
 
 
@@ -94,7 +97,8 @@ public class BoggleController {
     }
 
     public void TestButton() {
-        //TODO ieks
+        boggleModel.getNeighbours(2);
+
     }
 
 
@@ -137,246 +141,12 @@ public class BoggleController {
     // tests to see the neighbours
     public void getAllNeighbours(){
         for(int count = 0; count < (fieldSize * fieldSize); count++) {
-            neighboursLocations.add(findNeighbours(count));
+            neighboursLocations.add(boggleModel.getNeighbours(count));
         }
     }
 
-    private ArrayList<Integer> findNeighbours(int id) {
-        int temp;
-        HashSet<Integer> noDups = new HashSet<>();
 
 
-        // Linkerkant checks
-        if ((id % fieldSize == 0)) {
-
-
-            //linksboven
-            if (id < fieldSize) {
-                temp = id + 1;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + fieldSize + 1;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-            }
-
-            // linksonder
-            if (id > (boggleboardfield.getChildren().size() - (fieldSize + 1))) {
-                temp = id - fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id - (fieldSize - 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + 1;
-                noDups.add(temp);
-                //System.out.println("added: " + temp);
-
-
-            }
-
-            //linksmidden
-            if (!(id < fieldSize - 1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))) {
-                System.out.println("hier komt ie");
-                temp = id - fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id - (fieldSize - 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + 1;
-                noDups.add(temp);
-                //System.out.println("added: " + temp);
-
-                temp = id + fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + (fieldSize + 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-
-            }
-        }
-
-        //Rechterzijkant Check
-        if ((id % fieldSize == fieldSize - 1)) {
-            System.out.println("hier mag ie komen!");
-            if (id < fieldSize + 1) {
-                temp = id - 1;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + fieldSize - 1;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-            }
-
-            if (id > (boggleboardfield.getChildren().size() - (fieldSize + 1))) {
-                temp = id - 1;
-                noDups.add(temp);
-                //System.out.println("added: " + temp);
-
-                temp = id - fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id - (fieldSize - 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-            }
-
-            if (!(id < fieldSize + 1) && !(id > (boggleboardfield.getChildren().size() - (fieldSize + 1)))) {
-                temp = id - (fieldSize + 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id - fieldSize;
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id - 1;
-                noDups.add(temp);
-                //System.out.println("added: " + temp);
-
-                temp = id + (fieldSize - 1);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-                temp = id + (fieldSize);
-                noDups.add(temp);
-                //System.out.println("Added: " + temp);
-
-
-            }
-        }
-
-        // Binnengetallen...
-        if ((id > fieldSize - 1) && (id < (boggleboardfield.getChildren().size() - fieldSize)) && ((id % fieldSize != 0)) && ((id % fieldSize != fieldSize - 1))) {
-            temp = id - (fieldSize + 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - (fieldSize);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - (fieldSize - 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - 1;
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + 1;
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + (fieldSize - 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + (fieldSize);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + (fieldSize + 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-        }
-
-        // Bovengetallen
-        if ((id < fieldSize) && (id % fieldSize != 0) && id % fieldSize != fieldSize - 1) {
-            temp = id - 1;
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + 1;
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + (fieldSize - 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + (fieldSize);
-            noDups.add(temp);
-           // System.out.println("added: " + temp);
-
-            temp = id + (fieldSize + 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-        }
-
-        // Ondergetallen
-        if ((id > (boggleboardfield.getChildren().size() - fieldSize)) && (id % fieldSize != 0) && id % fieldSize != fieldSize - 1) {
-            temp = id - (fieldSize + 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - (fieldSize);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - (fieldSize - 1);
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id - 1;
-            noDups.add(temp);
-            //System.out.println("added: " + temp);
-
-            temp = id + 1;
-            noDups.add(temp);
-           // System.out.println("added: " + temp);
-
-
-        }
-
-        System.out.println("xxxxxxxxxxxxxxxxxxxxx");
-
-        ArrayList<Integer> neighbours = new ArrayList<>();
-
-        // Omzetten naar letters
-        for (Object value : noDups) {
-            Button button = (Button) boggleboardfield.getChildren().get((Integer) value);
-            neighbours.add(Integer.valueOf(button.getId()));
-
-        }
-
-        return neighbours;
-
-    }
-
-    public ArrayList<Character> neighbourToCharacter(ArrayList<Integer> neighbourLocations){
-        ArrayList<Character> neighbourCharacter = new ArrayList<>();
-        for (Integer neighbourLocation : neighbourLocations) {
-            Button button = (Button) boggleboardfield.getChildren().get(neighbourLocation);
-            String temp = button.getText();
-            neighbourCharacter.add(temp.charAt(0));
-        }
-
-        return neighbourCharacter;
-    }
-
-    public int getFieldSize() {
-        return fieldSize;
-    }
 }
 
 
