@@ -31,6 +31,7 @@ public class Trie {
 
         this.root = new TrieNode();
         this.boggleModel = boggleModel;
+
     }
 
     // Adds a new word to the Trie

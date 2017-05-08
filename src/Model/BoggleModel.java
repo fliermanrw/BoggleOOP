@@ -20,12 +20,13 @@ public class BoggleModel {
     private NeighbourModel neighbourModel;
     private Trie trie;
     private final int fieldSize;
-    HashSet<String> wordList = new HashSet<>();
+    HashSet<String> wordList;
 
     public BoggleModel(BoggleController boggleController, int fieldsize) throws IOException {
         this.boggleController = boggleController;
 
         this.fieldSize = fieldsize;
+        this.wordList = newWordList();
         this.boardModel = new BoardModel(this, fieldsize);
         this.neighbourModel = new NeighbourModel(this, fieldsize);
         this.boggleSolverModel = new BoggleSolverModel(this);
@@ -57,14 +58,18 @@ public class BoggleModel {
     }
 
     public HashSet<String> newWordList() throws IOException {
+        HashSet<String> words = new HashSet<>();
         Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
-            wordList.add(line); // still here to check if real word
-            trie.add(line);
+            words.add(line); // still here to check if real word
+            System.out.println(line);
+
+            //@TODO nu is de tree kapoet??
+            //trie.add(line);
 
         }
-        return wordList;
+        return words;
 
     }
 
