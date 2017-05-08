@@ -1,25 +1,25 @@
 package Model;
 
-import javafx.scene.control.Button;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
-/**
- * Created by Ryan on 8-5-2017.
- */
-public class NeighbourModel {
-    BoggleModel boggleModel;
-    final int fieldSize;
-    HashSet<Integer> noDups = new HashSet<>();
 
-    public NeighbourModel(BoggleModel boggleModel, int fieldSize) {
+class NeighbourModel {
+    private BoggleModel boggleModel;
+    private final int fieldSize;
+    private HashSet<Integer> noDups;
+
+    NeighbourModel(BoggleModel boggleModel, int fieldSize) {
         this.boggleModel = boggleModel;
         this.fieldSize = fieldSize;
+        this.noDups = new HashSet<>();
     }
 
-    public ArrayList<Integer> getNeighbours(int id) {
-        int temp;
+    ArrayList<Character> getNeighbours(int id) {
+        // clear previous noDups
+        noDups = new HashSet<>();
+
         int totalFieldSize = fieldSize * fieldSize;
 
         // Linkerkant checks
@@ -111,16 +111,23 @@ public class NeighbourModel {
 
         System.out.println("xxxxxxxxxxxxxxxxxxxxx");
 
-        ArrayList<Integer> neighbours = new ArrayList<>();
+        ArrayList<Character> neighbours = new ArrayList<>();
+        ArrayList<Character> temp = new ArrayList<>();
 
-        // Omzetten naar letters
-        // TODO omzetten(?)
-        for (Object value : noDups) {
-            //Button button = (Button) id.getChildren().get((Integer) value);
-            //neighbours.add(Integer.valueOf(button.getId()));
+        char[][] board = boggleModel.getBoard();
 
+        for(int x = 0; x < fieldSize; x++){
+            for(int y = 0; y < fieldSize; y++){
+                temp.add(board[x][y]);
+
+            }
         }
 
+        for(int value: noDups){
+            neighbours.add(temp.get(value));
+        }
+
+        System.out.println(neighbours);
         return neighbours;
 
     }
@@ -129,5 +136,12 @@ public class NeighbourModel {
         noDups.add((fieldNumber));
         System.out.println(fieldNumber);
 
+    }
+
+    // tests to see the neighbours
+    void getAllNeighbours(){
+        for(int count = 0; count < (fieldSize * fieldSize); count++) {
+            //TODO maybe.. do we want all neigbours or is it not necessary?
+        }
     }
 }

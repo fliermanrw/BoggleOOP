@@ -12,14 +12,14 @@ import static java.lang.Boolean.FALSE;
 /**
  * Created by Ryan on 7-5-2017.
  */
-public class BoardModel {
+class BoardModel {
     private final char[][] board;
     private final int fieldSize;
     private BoggleModel boggleModel;
     private boolean[][] isVisited;
 
 
-    public BoardModel(BoggleModel boggleModel, int fieldSize) {
+    BoardModel(BoggleModel boggleModel, int fieldSize) {
         this.boggleModel = boggleModel;
 
         this.board = new char[fieldSize][fieldSize];
@@ -29,7 +29,7 @@ public class BoardModel {
 
     }
 
-    public void fillBoard(){
+    void fillBoard(){
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++) {
 
@@ -40,16 +40,16 @@ public class BoardModel {
         }
     }
 
-    public void clearIsVisited(){
+    void clearIsVisited(){
         isVisited = new boolean[fieldSize][fieldSize];
     }
 
 
-    public char[][] getBoard(){
+    char[][] getBoard(){
         return board;
     }
 
-    public boolean[][] getIsVisited(){
+    boolean[][] getIsVisited(){
         return isVisited;
     }
 

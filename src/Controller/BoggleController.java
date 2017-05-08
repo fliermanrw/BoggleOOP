@@ -6,66 +6,39 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Scanner;
-
 
 
 public class BoggleController {
-    private final int fieldSize = 4;
     BoggleModel boggleModel;
+    private char[][] board;
+    private final int fieldSize = 4;
     public GridPane boggleboardfield;
     public Pane wordfield;
-    HashSet<String> wordList = new HashSet<>();
-    ArrayList<ArrayList<Integer>> neighboursLocations = new ArrayList<>();
-    ArrayList<ArrayList<Character>> neighboursCharacter = new ArrayList<>();
-    char[][] board;
+    HashSet<String> wordList;
+    ArrayList<Character> neighbours = new ArrayList<>();
 
 
-    Trie trie = new Trie();
 
     @FXML
     protected void initialize() throws IOException {
         boggleModel.fillBoard();
         generateNewBoard();
-        WordList();
+
     }
 
-    public BoggleController(){
+    public BoggleController() throws IOException {
         this.boggleModel = new BoggleModel(this, fieldSize);
         this.board = boggleModel.getBoard();
-    }
-
-
-    public void WordList() throws IOException {
-        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/BoggleOOP/src/dict.txt"));
-        while(sc.hasNext()){
-            String line = sc.nextLine();
-            wordList.add(line); // still here to check if real word
-
-        }
+        this.wordList = boggleModel.getWordList();
 
     }
-
-    public HashSet<String> getWordList(){
-        if(wordList.isEmpty()){
-            try {
-                WordList();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return wordList;
-    }
-
-
 
     private void generateNewBoard(){
         // get the generated char[][] board and create the same view in buttons
+        boggleModel.resetBoard();
         char[][] board = boggleModel.getBoard();
 
         //loop and create the buttons
@@ -86,9 +59,8 @@ public class BoggleController {
 
 
     public void SearchStartButton() throws IOException {
-        getAllNeighbours();
-        inWordList();
-
+        boggleModel.findInTree("appe");
+        boggleModel.findInTree("appel");
     }
 
     public void ResetBoardButton() {
@@ -99,15 +71,18 @@ public class BoggleController {
     public void TestButton() {
         boggleModel.getNeighbours(2);
 
+
+
     }
+
 
 
     // Kijken welke woorden matchen met de eerste letter (id.getText())
     // Als
-    private void inWordList() {
+    /*private void inWordList() {
         for(int count = 0; count < fieldSize * fieldSize; count ++){
 
-            ArrayList<Integer> localNeighbours = neighboursLocations.get(count);
+            ArrayList<Character> localNeighbours = neighboursLocations.get(count);
 
             //converts arraylist with id numbers to assigned letters
             Button button = (Button) boggleboardfield.getChildren().get(count);
@@ -135,15 +110,8 @@ public class BoggleController {
 
         }
 
-    }
+    }*/
 
-
-    // tests to see the neighbours
-    public void getAllNeighbours(){
-        for(int count = 0; count < (fieldSize * fieldSize); count++) {
-            neighboursLocations.add(boggleModel.getNeighbours(count));
-        }
-    }
 
 
 
