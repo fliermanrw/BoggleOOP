@@ -17,6 +17,7 @@ class BoardModel {
     private final int fieldSize;
     private BoggleModel boggleModel;
     private boolean[][] isVisited;
+    String boardLetters = "";
 
 
     BoardModel(BoggleModel boggleModel, int fieldSize) {
@@ -36,6 +37,7 @@ class BoardModel {
                 char letter = boggleModel.assignLetter();
                 board[x][y] = letter;
 
+                boardLetters = boardLetters + letter;
             }
         }
     }
@@ -53,5 +55,7 @@ class BoardModel {
         return isVisited;
     }
 
-
+    String getBoardLetters(){
+        return boardLetters;
+    }
 }
