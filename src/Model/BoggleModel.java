@@ -15,7 +15,7 @@ public class BoggleModel {
     private BoggleController boggleController;
     private BoggleSolverModel boggleSolverModel;
     private NeighbourModel neighbourModel;
-    private Trie trie;
+    public Trie trie;
     private final int fieldSize;
     HashSet<String> wordList;
     HashSet<String> possibleWords;
@@ -23,17 +23,19 @@ public class BoggleModel {
     public BoggleModel(BoggleController boggleController, int fieldsize) throws IOException {
         this.boggleController = boggleController;
 
-        this.fieldSize = fieldsize;
-        this.wordList = newWordList();
+
         this.boardModel = new BoardModel(this, fieldsize);
         this.neighbourModel = new NeighbourModel(this, fieldsize);
         this.boggleSolverModel = new BoggleSolverModel(this);
         this.trie = new Trie(this);
+        this.fieldSize = fieldsize;
+        this.wordList = newWordList();
         this.possibleWords = newPossibleWords();
     }
 
+
     // create hashset that contains all possible words in the current board
-    private HashSet<String> newPossibleWords() {
+    public HashSet<String> newPossibleWords() {
         HashSet<String> foundWords = new HashSet<>();
         String boardLetters = boardModel.getBoardLetters();
 
@@ -151,13 +153,14 @@ public class BoggleModel {
 
     public HashSet<String> newWordList() throws IOException {
         HashSet<String> words = new HashSet<>();
-        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt"));
+        Scanner sc = new Scanner(new File("C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/OOP3 inlever/BoggleOOP/out/production/BoggleOOP/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
             words.add(line); // still here to check if real word
             //System.out.println(line);
 
             //@TODO nu is de tree kapoet??
+            trie.addWord(line);
             //trie.add(line);
 
         }
