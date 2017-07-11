@@ -23,7 +23,7 @@ public class Trie {
     private int size;
     private BoggleController boggleController;
     private BoggleModel boggleModel;
-    private HashSet<String> wordList;
+//    private HashSet<String> wordList;
 
 
     Trie(BoggleModel boggleModel) throws IOException {
@@ -35,7 +35,7 @@ public class Trie {
     }
 
     // Adds a new word to the Trie
-    boolean add(String word){
+  public boolean addWord(String word){
         TrieNode trie = root;
         if(trie == null || word == null){
             return false;
@@ -75,7 +75,7 @@ public class Trie {
 
     // Check if the character(s) are present in the Trie
     // @TODO hij vindt nu ook nog dat "appe" goed is als "appel" een woord is..
-    boolean find(String string) {
+  public boolean find(String string) {
         Map<Character, TrieNode> children = root.getChildren();
         string = string.toLowerCase();
         TrieNode t = null;
@@ -85,21 +85,28 @@ public class Trie {
 
         for(int i = 0; i < string.length(); i++){
             char c = string.charAt(i);
+//            System.out.println(string.charAt(i));
+//            System.out.println(children.containsKey(c));
 
             if(children.containsKey(c)) {
-                System.out.println(c);
+                System.out.println(endWord);
                 t = children.get(c);
                 children = t.getChildren();
+                System.out.println(children);
                 endWord += String.valueOf(c);
-            } else {
-                return false;
+//                System.out.println(endWord);
+                if(t.isWord() == true){
+                    System.out.println("Woord is compleet " + endWord);
+                }
             }
+            else return false;
         }
 
 
 
         System.out.println("to check..:" + endWord);
-        return true;
+      System.out.println(string);
+        return endWord.matches(string);
     }
     
     public boolean remove(String string) {
@@ -138,7 +145,7 @@ public class Trie {
                 trie = children.get(c);
                 children = trie.getChildren();
 
-                if (trie.getText().equals(string)) {
+                if (trie.getText().matches(string)) {
                     parent.getChildren().remove(c);
                     trie = null;
                     return true;
@@ -153,7 +160,8 @@ public class Trie {
         return size;
     }
 
-    
+
+
 }
 
 
