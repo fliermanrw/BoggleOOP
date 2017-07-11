@@ -23,7 +23,6 @@ public class BoggleModel {
     public BoggleModel(BoggleController boggleController, int fieldsize) throws IOException {
         this.boggleController = boggleController;
 
-
         this.boardModel = new BoardModel(this, fieldsize);
         this.neighbourModel = new NeighbourModel(this, fieldsize);
         this.boggleSolverModel = new BoggleSolverModel(this);
@@ -153,7 +152,9 @@ public class BoggleModel {
 
     public HashSet<String> newWordList() throws IOException {
         HashSet<String> words = new HashSet<>();
-        Scanner sc = new Scanner(new File("C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/OOP3 inlever/BoggleOOP/out/production/BoggleOOP/dict.txt"));
+        // ROBERT
+        // RYAN : C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src.dict.txt
+        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
             words.add(line); // still here to check if real word

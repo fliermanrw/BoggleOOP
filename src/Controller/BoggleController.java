@@ -66,12 +66,11 @@ public class BoggleController {
     public void ResetBoardButton() {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
+
     }
 
     public void TestButton() {
         boggleModel.getNeighbours(2);
-
-
 
     }
 
