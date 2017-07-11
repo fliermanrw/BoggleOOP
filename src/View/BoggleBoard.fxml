@@ -10,37 +10,37 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BoggleController">
-   <children>
-      <MenuBar prefHeight="25.0" prefWidth="700.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                <MenuItem mnemonicParsing="false" text="Reset board" onAction="#ResetBoardButton"/>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-     <Pane fx:id="wordfield" layoutY="25" prefHeight="400.0" prefWidth="120.0" style="-fx-background-color: lightgrey;">
-         <children>
-             <Button onAction="#SearchStartButton" layoutX="15.0" layoutY="15.0" prefWidth="90" prefHeight="50" mnemonicParsing="false" text="Start search" />
-             <Button onAction="#TestButton" layoutX="15.0" layoutY="120.0" prefWidth="90" prefHeight="50"  mnemonicParsing="false" text="Tester" />
-             <Label layoutX="15.0" layoutY="70.0" prefHeight="17.0" prefWidth="85.0" text="Found words:" />
+    <children>
+        <MenuBar prefHeight="25.0" prefWidth="700.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Reset board" onAction="#ResetBoardButton"/>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Pane fx:id="wordfield" layoutY="25" prefHeight="400.0" prefWidth="120.0" style="-fx-background-color: lightgrey;">
+            <children>
+                <Button onAction="#SearchStartButton" layoutX="15.0" layoutY="15.0" prefWidth="90" prefHeight="50" mnemonicParsing="false" text="Start search" />
+                <Button onAction="#TestButton" layoutX="15.0" layoutY="120.0" prefWidth="90" prefHeight="50"  mnemonicParsing="false" text="Tester" />
+                <Label layoutX="15.0" layoutY="70.0" prefHeight="17.0" prefWidth="85.0" text="Found words:" />
 
-         </children></Pane>
-      <GridPane fx:id="boggleboardfield" layoutX="160.0" layoutY="25.0" prefHeight="375.0" prefWidth="500.0">
-      </GridPane>
+            </children></Pane>
+        <GridPane fx:id="boggleboardfield" layoutX="160.0" layoutY="25.0" prefHeight="375.0" prefWidth="500.0">
+        </GridPane>
 
 
-   </children>
+    </children>
 </AnchorPane>
