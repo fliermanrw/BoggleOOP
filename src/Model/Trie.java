@@ -5,6 +5,7 @@ import Controller.BoggleController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,20 +22,20 @@ public class Trie {
     private TrieNode root;
     private int size;
     private BoggleController boggleController;
-    //private ArrayList<String> wordList = boggleController.getWordList();
+    private BoggleModel boggleModel;
+    private HashSet<String> wordList;
 
 
-    public Trie(){
-        root = new TrieNode();
-        size = 0;
+    Trie(BoggleModel boggleModel) throws IOException {
+        this.size = 0;
+
+        this.root = new TrieNode();
+        this.boggleModel = boggleModel;
+
     }
 
-    /*public void printwordlist(){
-        System.out.println(wordList);
-    }*/
-
     // Adds a new word to the Trie
-    public boolean add(String word){
+    boolean add(String word){
         TrieNode trie = root;
         if(trie == null || word == null){
             return false;
@@ -73,14 +74,14 @@ public class Trie {
     }
 
     // Check if the character(s) are present in the Trie
-    // @TODO hij vindt nu ook nog dat "appe" goed is als "appel" een toegevoegd woord is..
-    public boolean find(String string) {
+    // @TODO hij vindt nu ook nog dat "appe" goed is als "appel" een woord is..
+    boolean find(String string) {
         Map<Character, TrieNode> children = root.getChildren();
         string = string.toLowerCase();
         TrieNode t = null;
         String endWord = "";
+        boolean isWord;
 
-        //System.out.println("String length = " + string.length() + " - " + string);
 
         for(int i = 0; i < string.length(); i++){
             char c = string.charAt(i);
@@ -90,13 +91,12 @@ public class Trie {
                 t = children.get(c);
                 children = t.getChildren();
                 endWord += String.valueOf(c);
-                /*if(wordList.contains(endWord)){
-                    System.out.println(endWord);
-                }*/
             } else {
                 return false;
             }
         }
+
+
 
         System.out.println("to check..:" + endWord);
         return true;
@@ -153,9 +153,6 @@ public class Trie {
         return size;
     }
 
-    public void test(){
-        System.out.println(root.getChildren());
-    }
     
 }
 
