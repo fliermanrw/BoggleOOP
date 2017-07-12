@@ -59,13 +59,15 @@ public class BoggleController {
 
 
     public void SearchStartButton() throws IOException {
-        boggleModel.findInTree("appe");
-        boggleModel.findInTree("appel");
+        //boggleModel.findInTree("appe");
+        //boggleModel.findInTree("appel");
+        boggleModel.findInTree("a");
     }
 
     public void ResetBoardButton() {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
+
 
     }
 

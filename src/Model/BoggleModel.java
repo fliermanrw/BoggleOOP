@@ -87,7 +87,12 @@ public class BoggleModel {
 
                     if(wordPossible){
                         counter++;
+
+                        // add the word to the possibleWords HashSet
                         foundWords.add(word);
+
+                        // Add the word to the tree
+                        trie.addWord(word);
                     }
 
                 }
@@ -157,15 +162,10 @@ public class BoggleModel {
         Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
-            words.add(line); // still here to check if real word
-            //System.out.println(line);
 
-            //@TODO nu is de tree kapoet??
-            trie.addWord(line);
-            //trie.add(line);
-
+            words.add(line);
         }
-        //words.forEach(System.out::println);
+
         return words;
     }
 
@@ -174,6 +174,7 @@ public class BoggleModel {
     }
 
     public void findInTree(String word){
+        System.out.println(trie.getSize());
         System.out.println(trie.find(word));
     }
 
