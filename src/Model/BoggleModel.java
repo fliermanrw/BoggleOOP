@@ -147,12 +147,7 @@ public class BoggleModel {
     }
 
 
-    // Resets the board with new letters and the new list of possible words
-    public void resetBoard(){
-        this.boardModel = new BoardModel(this, fieldSize);
-        boardModel.fillBoard();
-        this.possibleWords = newPossibleWords();
-    }
+
 
 
     // fills the board with letters
@@ -170,7 +165,7 @@ public class BoggleModel {
         HashSet<String> words = new HashSet<>();
         // ROBERT
         // RYAN : C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src.dict.txt
-        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt"));
+        Scanner sc = new Scanner(new File("C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
 
@@ -192,7 +187,14 @@ public class BoggleModel {
 
 
 
+    // Resets the board with new letters and the new list of possible words
+    public void resetBoard(){
+        this.boardModel = new BoardModel(this, fieldSize);
+        boardModel.fillBoard();
+        trie.clearTree();
+        this.possibleWords = newPossibleWords();
 
+    }
 
 
 
