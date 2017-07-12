@@ -136,7 +136,7 @@ public class BoggleModel {
 
     // returns a randomized letter to create the board
     Character assignLetter(){
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String letters = "AABCDDEEFFGGHIJKLMMNNOOPQRRSTUVWXYZ";
 
         Random rd = new Random();
         return letters.charAt(rd.nextInt(letters.length()));
@@ -160,12 +160,16 @@ public class BoggleModel {
         return neighbourModel.getNeighbours(id);
     }
 
+    public void solver(){
+        boggleSolverModel.getPossibleWords();
+    }
+
 
     public HashSet<String> newWordList() throws IOException {
         HashSet<String> words = new HashSet<>();
-        // ROBERT
-        // RYAN : C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src.dict.txt
-        Scanner sc = new Scanner(new File("C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/BoggleOOP/src/dict.txt"));
+        // ROBERT C:/Users/Robert/Desktop/Studie/Thema 2.3/OOP3/BoggleOOP/src/dict.txt"
+        // RYAN : C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt
+        Scanner sc = new Scanner(new File("C:/Users/Ryan/IdeaProjects/blok13/BoggleOOP/src/dict.txt"));
         while(sc.hasNext()){
             String line = sc.nextLine();
 
@@ -185,13 +189,16 @@ public class BoggleModel {
     }
 
 
-
+    public String getBoardLetters(){
+        return boardModel.getBoardLetters();
+    }
 
     // Resets the board with new letters and the new list of possible words
     public void resetBoard(){
         this.boardModel = new BoardModel(this, fieldSize);
         boardModel.fillBoard();
         trie.clearTree();
+        boggleSolverModel.foundWords = new HashSet<>();
         this.possibleWords = newPossibleWords();
 
     }

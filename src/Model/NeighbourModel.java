@@ -109,7 +109,7 @@ class NeighbourModel {
             addtoNeighbours(id + 1);
         }
 
-        System.out.println("xxxxxxxxxxxxxxxxxxxxx");
+        //System.out.println("xxxxxxxxxxxxxxxxxxxxx");
 
         ArrayList<Character> neighbours = new ArrayList<>();
         ArrayList<Character> temp = new ArrayList<>();
@@ -127,15 +127,15 @@ class NeighbourModel {
             neighbours.add(temp.get(value));
         }
 
-        System.out.println("nu de letters: ");
-        System.out.println(neighbours);
+        //System.out.println("nu de letters: ");
+        //System.out.println(neighbours);
         return neighbours;
 
     }
 
     private void addtoNeighbours(int fieldNumber){
         noDups.add((fieldNumber));
-        System.out.println(fieldNumber);
+        //System.out.println(fieldNumber);
 
     }
 
