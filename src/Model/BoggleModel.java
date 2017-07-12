@@ -59,16 +59,27 @@ public class BoggleModel {
         //System.out.println("A, E, O, U, I" + aPresent + ePresent + oPresent + uPresent + iPresent);
 
         // Looping through the wordlist
-        //String az = "aeiou";
+        String az = "abcdefghijklmnopqrstuvwxyz";
+
 
         for (String word : wordList) {
             boolean wordPossible = true;
+
             for(int xx = 0; xx < boardLetters.length() ; xx++) {
                 // if first index of the word matches the character
                 if (word.charAt(0) == boardLetters.charAt(xx)){
+
+
+                    //check if letter in word but not in boardLetters..
+                    for(int yy =0; yy < az.length() ; yy++){
+                        String temp = String.valueOf(az.charAt(yy));
+                        if(!boardLetters.contains(temp) && word.contains(temp)){
+                            wordPossible = false;
+                        }
+                    }
+
                     // when there is an A in the word, but none in the boardletters...
-                    //@TODO for each letter.. in a for loop
-                    if(!aPresent && word.contains("a")){
+                    /*if(!aPresent && word.contains("a")){
                         wordPossible = false;
                     }
                     if(!ePresent && word.contains("e")){
@@ -83,7 +94,7 @@ public class BoggleModel {
                     }
                     if(!iPresent && word.contains("i")){
                         wordPossible = false;
-                    }
+                    }*/
 
                     if(wordPossible){
                         counter++;
