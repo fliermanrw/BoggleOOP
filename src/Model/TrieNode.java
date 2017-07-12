@@ -30,6 +30,11 @@ public class TrieNode {
         return children;
     }
 
+    public void clearHashMap(){
+        children = null;
+        children = new HashMap<Character, TrieNode>();
+    }
+
     public String getText(){
         return text;
     }

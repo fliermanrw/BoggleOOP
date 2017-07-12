@@ -4,12 +4,10 @@ import javafx.scene.*;
 import Controller.BoggleController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static jdk.nashorn.internal.objects.Global.print;
+import static jdk.nashorn.internal.objects.Global.toObject;
 
 /**
  * Created by Ryan on 26-4-2017.
@@ -28,7 +26,6 @@ public class Trie {
 
     Trie(BoggleModel boggleModel) throws IOException {
         this.size = 0;
-
         this.root = new TrieNode();
         this.boggleModel = boggleModel;
 
@@ -111,6 +108,10 @@ public class Trie {
     
     public boolean remove(String string) {
         return findNode(root, string);
+
+    }
+    public void clearTree(){
+       root.clearHashMap();
     }
 
     // Wat doet ie hier precies?
@@ -159,8 +160,6 @@ public class Trie {
     public int getSize(){
         return size;
     }
-
-
 
 }
 
