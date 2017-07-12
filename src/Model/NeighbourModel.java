@@ -127,6 +127,7 @@ class NeighbourModel {
             neighbours.add(temp.get(value));
         }
 
+        System.out.println("nu de letters: ");
         System.out.println(neighbours);
         return neighbours;
 
