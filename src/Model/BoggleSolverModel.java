@@ -3,10 +3,7 @@ package Model;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Ryan on 8-5-2017.
@@ -20,19 +17,22 @@ public class BoggleSolverModel {
         this.boggleModel = boggleModel;
     }
 
-    public void getPossibleWords(){
-        /*for(int x = 0; x < 16; x++){
+    public void getAllPossibleWords(){
+        for(int x = 0; x < 16; x++){
             solver(x);
-        }*/
-        solver(1);
+        }
+
+        // Debug reasons
+        //allWordsSolver(1);
         System.out.println("Dit zijn de woorden: "+ foundWords);
     }
 
-    // get all words for the FIRST letter
-    // TODO implement all letters..
+
+    // get all words for a letter
     public void solver(int id) {
-        List<Integer> usedIDs = new ArrayList<>();
-        id = 5;
+
+        // debug reasons
+        //id = 5;
 
 
         String boardLetters = boggleModel.getBoardLetters().toLowerCase();
@@ -44,8 +44,10 @@ public class BoggleSolverModel {
         // for each word check if character[x] is a neighbour if the startLetter - id -
         for (String word : words) {
             int x = 1;
-            // When word(0) == "A" and letter is "A".. check
+            // When word(0) == "a" and letter is "a".. check
             if (word.charAt(0) == letter) {
+                List<Integer> usedIDs = new ArrayList<>();
+                usedIDs.add(id);
                 System.out.println("KANS");
                 checkNeighbours(word, id, x, usedIDs);
             } else{
@@ -57,28 +59,50 @@ public class BoggleSolverModel {
 
     // check the character for neighbours that match the word
     public void checkNeighbours(String word, int id, int x, List<Integer> usedIDs){
-        // get the list met neighbours
         ArrayList<Character> neighbours = charToLower(boggleModel.getNeighbours(id));
+        ArrayList<Integer> neighbourIDs = boggleModel.getFieldIDs();
 
-        System.out.println("Laten we het eens proberen..");
+
+        // debug reasons
+
         System.out.println(neighbours);
-        
+        System.out.println(neighbourIDs);
 
+
+        // "while" word length > X, go into recursion
         if(word.length() > x) {
+            System.out.println("Laten we het eens proberen.. : " + word + "..." + word.charAt(x));
             // check if the character matches && if it has NOT already been used
-            if ((neighbours.contains(word.charAt(x)) && !usedIDs.contains(neighbours.indexOf(word.charAt(x))))) {
-                // add the current ID to EXCLUDE in next search
-                usedIDs.add(neighbours.indexOf(word.charAt(x)));
+            /*if ((neighbours.contains(word.charAt(x)) && !usedIDs.contains(neighbours.indexOf(word.charAt(x))))) {*/
+            if ((neighbours.contains(word.charAt(x)))) {
+                // check whether neighbours heeft word.charAt(x).. if true, we want to know what letter and where the letter is in the neighbours.
+                // With that we can check in the neighboursID whether that ID is in the usedIDs..
 
-                // increase X so word.charAt(x) will increase
-                x++;
+                int check = neighbourIDs.get(neighbours.indexOf(word.charAt(x)));
 
-                // debug reasons
-                System.out.println("Dit zijn de used IDs: " + usedIDs);
+                // When there are more matches...
+                if(check != neighbours.lastIndexOf(word.charAt(x))){
+                    if(usedIDs.contains(check)){
+                        check = neighbourIDs.get(neighbours.lastIndexOf(word.charAt(x)));
+                    }
+                }
 
-                // recursion
-                checkNeighbours(word, id, x, usedIDs);
+                System.out.println(check);
+                System.out.println("...: " + usedIDs);
+                if(!usedIDs.contains(check)) {
+                    System.out.println("Ik doe hier wel dingen");
+                    // increase X so word.charAt(x) will increase
+                    x++;
+                    System.out.println("Nu is id: " + id);
+                    id = check;
+                    System.out.println("ID is nu.." + id);
+                    // debug reasons
+                    System.out.println("Dit zijn de used IDs: " + usedIDs);
 
+                    // recursion
+                    usedIDs.add(check);
+                    checkNeighbours(word, id, x, usedIDs);
+                }
             } else {
                 // nothing found so done
                 System.out.println("Kloar met zoeken..");
@@ -86,7 +110,10 @@ public class BoggleSolverModel {
         } else if(word.length() == x){
                 foundWords.add(word);
                 System.out.println("Woord gevonden: " + word);
-            }
+            } else {
+            System.out.println("Klaar met zoeken..");
+
+        }
 
     }
 

@@ -1,6 +1,8 @@
 package Model;
 
 import Controller.BoggleController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,26 +144,29 @@ public class BoggleModel {
         return letters.charAt(rd.nextInt(letters.length()));
     }
 
+    // gets the board dimensions
     public char[][] getBoard(){
         return boardModel.getBoard();
     }
-
-
-
-
 
     // fills the board with letters
     public void fillBoard(){
         boardModel.fillBoard();
     }
 
-
+    // gets the neighbours calculated in neighbourmodel and returns it to..
     public ArrayList<Character> getNeighbours(int id){
         return neighbourModel.getNeighbours(id);
     }
 
-    public void solver(){
-        boggleSolverModel.getPossibleWords();
+    // gets the corresponding fieldIDs (to the neighbours) and returns it to..
+    public ArrayList<Integer> getFieldIDs(){
+        return neighbourModel.getFieldIDs();
+    }
+
+    // calls the boggleeSolverModel to get all possible words
+    public void allWordsSolver(){
+        boggleSolverModel.getAllPossibleWords();
     }
 
 
@@ -202,8 +207,4 @@ public class BoggleModel {
         this.possibleWords = newPossibleWords();
 
     }
-
-
-
-
 }

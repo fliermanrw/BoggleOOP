@@ -9,16 +9,19 @@ class NeighbourModel {
     private BoggleModel boggleModel;
     private final int fieldSize;
     private HashSet<Integer> noDups;
+    private ArrayList<Integer> fieldIDs;
 
     NeighbourModel(BoggleModel boggleModel, int fieldSize) {
         this.boggleModel = boggleModel;
         this.fieldSize = fieldSize;
         this.noDups = new HashSet<>();
+        this.fieldIDs = new ArrayList<>();
     }
 
     ArrayList<Character> getNeighbours(int id) {
         // clear previous noDups
         noDups = new HashSet<>();
+        fieldIDs = new ArrayList<>();
 
         int totalFieldSize = fieldSize * fieldSize;
 
@@ -125,6 +128,7 @@ class NeighbourModel {
 
         for(int value: noDups){
             neighbours.add(temp.get(value));
+            fieldIDs.add(value);
         }
 
         //System.out.println("nu de letters: ");
@@ -137,6 +141,10 @@ class NeighbourModel {
         noDups.add((fieldNumber));
         //System.out.println(fieldNumber);
 
+    }
+
+    public ArrayList<Integer> getFieldIDs(){
+        return fieldIDs;
     }
 
     // tests to see the neighbours
