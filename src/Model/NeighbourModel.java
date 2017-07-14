@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -46,7 +45,6 @@ class NeighbourModel {
 
             //linksmidden
             if (!(id < fieldSize - 1) && !(id > (totalFieldSize - (fieldSize + 1)))) {
-                System.out.println("hier komt ie");
                 addtoNeighbours(id - fieldSize);
                 addtoNeighbours( id - (fieldSize - 1));
                 addtoNeighbours(id + 1);

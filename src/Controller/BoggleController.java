@@ -92,6 +92,9 @@ public class BoggleController {
         this.timeTaken.clear();
         this.timeTaken.appendText("Time: " + timeTakenToFindWords + "ms");
 
+        //Get number of words
+        int totalWords = boggleModel.getWordCount();
+        this.timeTaken.appendText("\nWords: " + totalWords);
     }
 
     // disables the textareas that show information

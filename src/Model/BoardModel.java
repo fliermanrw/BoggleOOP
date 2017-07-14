@@ -30,6 +30,7 @@ class BoardModel {
 
     }
 
+    // fills the board with letters
     void fillBoard(){
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++) {
@@ -37,6 +38,7 @@ class BoardModel {
                 char letter = boggleModel.assignLetter();
                 board[x][y] = letter;
 
+                // add letter to String boardLetters
                 boardLetters = boardLetters + letter;
             }
         }

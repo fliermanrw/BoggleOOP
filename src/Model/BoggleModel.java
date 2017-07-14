@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class BoggleModel {
     private BoardModel boardModel;
-    private BoggleController boggleController;
+    //private BoggleController boggleController;
     private BoggleSolverModel boggleSolverModel;
     private NeighbourModel neighbourModel;
     public Trie trie;
@@ -21,7 +21,7 @@ public class BoggleModel {
     HashSet<String> possibleWords;
 
     public BoggleModel(BoggleController boggleController, int fieldsize) throws IOException {
-        this.boggleController = boggleController;
+        //this.boggleController = boggleController;
 
         this.boardModel = new BoardModel(this, fieldsize);
         this.neighbourModel = new NeighbourModel(this, fieldsize);
@@ -35,7 +35,7 @@ public class BoggleModel {
 
     // create hashset that contains all possible words in the current board
     public HashSet<String> newPossibleWords() {
-        HashSet<String> foundWords = new HashSet<>();
+        HashSet<String> possibleWords = new HashSet<>();
         String boardLetters = boardModel.getBoardLetters();
 
         // debug prints
@@ -62,7 +62,7 @@ public class BoggleModel {
 
 
                     //check if letter in word but not in boardLetters..
-                    for(int yy =0; yy < az.length() ; yy++){
+                    for(int yy = 0; yy < az.length() ; yy++){
                         String temp = String.valueOf(az.charAt(yy));
                         if(!boardLetters.contains(temp) && word.contains(temp)){
                             wordPossible = false;
@@ -73,7 +73,7 @@ public class BoggleModel {
                         counter++;
 
                         // add the word to the possibleWords HashSet
-                        foundWords.add(word);
+                        possibleWords.add(word);
 
                         // Add the word to the tree
                         trie.addWord(word);
@@ -87,7 +87,7 @@ public class BoggleModel {
         //foundWords.forEach(System.out::println);
         System.out.println("Found words: "+ counter);
         System.out.println("check if possible...");
-        return foundWords;
+        return possibleWords;
     }
 
     // removes all double characters in the boardLetters
@@ -177,6 +177,11 @@ public class BoggleModel {
         return boggleSolverModel.foundWords;
     }
 
+    public int getWordCount(){
+        return boggleSolverModel.foundWords.size();
+    }
+
+    // returns the time taken to find all words on the board
     public long getTimeTaken(){
         return boggleSolverModel.timeTaken;
     }
