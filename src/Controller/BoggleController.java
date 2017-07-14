@@ -12,6 +12,8 @@ import java.util.HashSet;
 
 
 public class BoggleController {
+    public TextArea foundWordsField;
+    public TextArea timeTaken;
     BoggleModel boggleModel;
     private char[][] board;
     private final int fieldSize = 4;
@@ -21,12 +23,13 @@ public class BoggleController {
     ArrayList<Character> neighbours = new ArrayList<>();
 
 
-
     @FXML
     protected void initialize() throws IOException {
         boggleModel.fillBoard();
         generateNewBoard();
 
+        // disable ability to change textarea
+        disableTextAreas();
     }
 
     public BoggleController() throws IOException {
@@ -58,8 +61,6 @@ public class BoggleController {
 
 
     public void SearchStartButton() throws IOException {
-        //boggleModel.findInTree("appe");
-        //boggleModel.findInTree("appel");
         boggleModel.findInTree("zwommen");
         boggleModel.findInTree("zwan");
         boggleModel.findInTree("a");
@@ -68,13 +69,50 @@ public class BoggleController {
     public void ResetBoardButton() {
         boggleboardfield.getChildren().clear();
         generateNewBoard();
+        clearWordField();
 
     }
 
-    public void TestButton() {
-        //boggleModel.getNeighbours(2);
+    public void FindButton() {
         boggleModel.allWordsSolver();
+        clearWordField();
+        updateWordField();
+        updateTime();
+    }
 
+    // clears the wordfield
+    private void clearWordField(){
+        this.foundWordsField.clear();
+        this.foundWordsField.appendText("Found words: ");
+    }
+
+    // updates the searchtime when searched again
+    private void updateTime(){
+        long timeTakenToFindWords = boggleModel.getTimeTaken();
+        this.timeTaken.clear();
+        this.timeTaken.appendText("Time: " + timeTakenToFindWords + "ms");
+
+    }
+
+    // disables the textareas that show information
+    private void disableTextAreas(){
+        // shows the found words after search
+        foundWordsField.setEditable(false);
+        foundWordsField.setMouseTransparent(true);
+
+        // shows time in ms
+        timeTaken.setEditable(false);
+        timeTaken.setMouseTransparent(true);
+    }
+
+    // updates the found words when searched again
+    private void updateWordField(){
+        clearWordField();
+        HashSet foundWords = boggleModel.getFoundWords();
+
+        for(Object word: foundWords){
+            this.foundWordsField.appendText("\n" + word);
+        }
     }
 
 

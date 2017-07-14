@@ -1,8 +1,6 @@
 package Model;
 
 import Controller.BoggleController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,15 +48,6 @@ public class BoggleModel {
         // to lower case, otherwise nothing is going to be found
         boardLetters = boardLetters.toLowerCase();
 
-        // booleans for "a", "e", "o", "u" , "i"
-        //boolean aPresent, ePresent, oPresent, uPresent, iPresent;
-        boolean aPresent = isPresent(boardLetters, "a");
-        boolean ePresent = isPresent(boardLetters, "e");
-        boolean oPresent = isPresent(boardLetters, "o");
-        boolean uPresent = isPresent(boardLetters, "u");
-        boolean iPresent = isPresent(boardLetters, "i");
-
-        //System.out.println("A, E, O, U, I" + aPresent + ePresent + oPresent + uPresent + iPresent);
 
         // Looping through the wordlist
         String az = "abcdefghijklmnopqrstuvwxyz";
@@ -80,24 +69,6 @@ public class BoggleModel {
                         }
                     }
 
-                    // when there is an A in the word, but none in the boardletters...
-                    /*if(!aPresent && word.contains("a")){
-                        wordPossible = false;
-                    }
-                    if(!ePresent && word.contains("e")){
-                        wordPossible = false;
-                    }
-
-                    if(!oPresent && word.contains("o")){
-                        wordPossible = false;
-                    }
-                    if(!uPresent && word.contains("u")){
-                        wordPossible = false;
-                    }
-                    if(!iPresent && word.contains("i")){
-                        wordPossible = false;
-                    }*/
-
                     if(wordPossible){
                         counter++;
 
@@ -117,12 +88,6 @@ public class BoggleModel {
         System.out.println("Found words: "+ counter);
         System.out.println("check if possible...");
         return foundWords;
-    }
-
-
-    private boolean isPresent(String word, String letter){
-        return word.contains(letter);
-
     }
 
     // removes all double characters in the boardLetters
@@ -206,5 +171,13 @@ public class BoggleModel {
         boggleSolverModel.foundWords = new HashSet<>();
         this.possibleWords = newPossibleWords();
 
+    }
+
+    public HashSet<String> getFoundWords() {
+        return boggleSolverModel.foundWords;
+    }
+
+    public long getTimeTaken(){
+        return boggleSolverModel.timeTaken;
     }
 }

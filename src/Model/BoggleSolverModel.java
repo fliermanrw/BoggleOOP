@@ -1,36 +1,39 @@
 package Model;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 /**
  * Created by Ryan on 8-5-2017.
  */
+
 public class BoggleSolverModel {
     BoggleModel boggleModel;
-    boolean isWord;
     HashSet<String> foundWords = new HashSet<>();
+    long timeTaken;
 
     BoggleSolverModel(BoggleModel boggleModel) {
         this.boggleModel = boggleModel;
     }
 
     public void getAllPossibleWords(){
+        long startTime = System.currentTimeMillis();
         for(int x = 0; x < 16; x++){
             solver(x);
         }
 
+
         // Debug reasons
-        //allWordsSolver(1);
+        long endTime = System.currentTimeMillis();
+        timeTaken = endTime - startTime;
+
+        System.out.println("The time for solving is: " + timeTaken + "MS");
         System.out.println("Dit zijn de woorden: "+ foundWords);
     }
 
 
     // get all words for a letter
     public void solver(int id) {
-
         // debug reasons
         //id = 5;
 
@@ -50,9 +53,6 @@ public class BoggleSolverModel {
                 usedIDs.add(id);
                 System.out.println("KANS");
                 checkNeighbours(word, id, x, usedIDs);
-            } else{
-                //System.out.println("HELAAS! Woord is: " + word + ".. en letter is: " + letter);
-                //;System.out.println("NEIN");
             }
         }
     }
@@ -64,20 +64,18 @@ public class BoggleSolverModel {
 
 
         // debug reasons
-
         System.out.println(neighbours);
         System.out.println(neighbourIDs);
 
 
         // "while" word length > X, go into recursion
         if(word.length() > x) {
+            // debug reasons
             System.out.println("Laten we het eens proberen.. : " + word + "..." + word.charAt(x));
             // check if the character matches && if it has NOT already been used
-            /*if ((neighbours.contains(word.charAt(x)) && !usedIDs.contains(neighbours.indexOf(word.charAt(x))))) {*/
             if ((neighbours.contains(word.charAt(x)))) {
-                // check whether neighbours heeft word.charAt(x).. if true, we want to know what letter and where the letter is in the neighbours.
-                // With that we can check in the neighboursID whether that ID is in the usedIDs..
-
+                // check whether neighbours has word.charAt(x).. if true, we want to know what letter and where the letter is in the neighbours.
+                // With that we can check in the neighboursID whether that ID is already in the usedIDs..
                 int check = neighbourIDs.get(neighbours.indexOf(word.charAt(x)));
 
                 // When there are more matches...
@@ -87,16 +85,20 @@ public class BoggleSolverModel {
                     }
                 }
 
+                // debug reasons
                 System.out.println(check);
                 System.out.println("...: " + usedIDs);
+
+                // when check not in usedIDs yet, we can of course use it and find its neighbours..
                 if(!usedIDs.contains(check)) {
-                    System.out.println("Ik doe hier wel dingen");
                     // increase X so word.charAt(x) will increase
                     x++;
+
+                    // debug reasons
                     System.out.println("Nu is id: " + id);
+
                     id = check;
                     System.out.println("ID is nu.." + id);
-                    // debug reasons
                     System.out.println("Dit zijn de used IDs: " + usedIDs);
 
                     // recursion
@@ -107,7 +109,7 @@ public class BoggleSolverModel {
                 // nothing found so done
                 System.out.println("Kloar met zoeken..");
             }
-        } else if(word.length() == x){
+        } else if((word.length() == x)){
                 foundWords.add(word);
                 System.out.println("Woord gevonden: " + word);
             } else {
