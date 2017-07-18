@@ -23,12 +23,11 @@ public class BoggleSolverModel {
         }
 
 
-        // Debug reasons
+        // Show computing time
         long endTime = System.currentTimeMillis();
         timeTaken = endTime - startTime;
 
         System.out.println("The time for solving is: " + timeTaken + "MS");
-        //System.out.println("Dit zijn de woorden: "+ foundWords);
     }
 
 
@@ -93,7 +92,7 @@ public class BoggleSolverModel {
                     x++;
                     id = check;
 
-                    // ddebug reasons
+                    // debug reasons
                     //System.out.println("ID is nu.." + id);
                     //System.out.println("Dit zijn de used IDs: " + usedIDs);
 

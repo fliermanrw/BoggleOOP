@@ -101,7 +101,6 @@ public class BoggleController {
     private void disableTextAreas(){
         // shows the found words after search
         foundWordsField.setEditable(false);
-        foundWordsField.setMouseTransparent(true);
 
         // shows time in ms
         timeTaken.setEditable(false);
