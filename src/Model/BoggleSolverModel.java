@@ -1,6 +1,5 @@
 package Model;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 /**
@@ -46,7 +45,7 @@ public class BoggleSolverModel {
             if (word.charAt(0) == letter) {
                 List<Integer> usedIDs = new ArrayList<>();
 
-                //System.out.println("KANS");
+
                 usedIDs.add(id);
                 checkNeighbours(word, id, x, usedIDs);
             }
@@ -59,16 +58,8 @@ public class BoggleSolverModel {
         ArrayList<Integer> neighbourIDs = boggleModel.getFieldIDs();
 
 
-        // debug reasons
-        //System.out.println(neighbours);
-        //System.out.println(neighbourIDs);
-
-
         // "while" word length > X, go into recursion
         if(word.length() > x) {
-            // debug reasons
-            //System.out.println("Laten we het eens proberen.. : " + word + "..." + word.charAt(x));
-
             // check if the character matches && if it has NOT already been used
             if ((neighbours.contains(word.charAt(x)))) {
                 // check whether neighbours has word.charAt(x).. if true, we want to know what letter and where the letter is in the neighbours.
@@ -82,31 +73,19 @@ public class BoggleSolverModel {
                     }
                 }
 
-                // debug reasons
-                //System.out.println(check);
-                //System.out.println("...: " + usedIDs);
-
                 // when check not in usedIDs yet, we can of course use it and find its neighbours..
                 if(!usedIDs.contains(check)) {
                     // increase X so word.charAt(x) will increase
                     x++;
                     id = check;
 
-                    // debug reasons
-                    //System.out.println("ID is nu.." + id);
-                    //System.out.println("Dit zijn de used IDs: " + usedIDs);
-
                     // recursion
                     usedIDs.add(check);
                     checkNeighbours(word, id, x, usedIDs);
                 }
-            } else {
-                // nothing found so done
-                //System.out.println("Kloar met zoeken..");
             }
         } else if((word.length() == x)){
                 foundWords.add(word);
-                //System.out.println("Woord gevonden: " + word);
             } else {
             System.out.println("Klaar met zoeken..");
 

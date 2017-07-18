@@ -16,15 +16,13 @@ class BoardModel {
     private final char[][] board;
     private final int fieldSize;
     private BoggleModel boggleModel;
-    private boolean[][] isVisited;
-    String boardLetters = "";
+    private String boardLetters = "";
 
 
     BoardModel(BoggleModel boggleModel, int fieldSize) {
         this.boggleModel = boggleModel;
 
         this.board = new char[fieldSize][fieldSize];
-        this.isVisited = new boolean[fieldSize][fieldSize];
         this.fieldSize = fieldSize;
 
 
@@ -44,17 +42,10 @@ class BoardModel {
         }
     }
 
-    void clearIsVisited(){
-        isVisited = new boolean[fieldSize][fieldSize];
-    }
 
 
     char[][] getBoard(){
         return board;
-    }
-
-    boolean[][] getIsVisited(){
-        return isVisited;
     }
 
     String getBoardLetters(){

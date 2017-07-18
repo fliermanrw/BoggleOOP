@@ -12,21 +12,17 @@ import java.util.*;
  */
 public class BoggleModel {
     private BoardModel boardModel;
-    //private BoggleController boggleController;
     private BoggleSolverModel boggleSolverModel;
     private NeighbourModel neighbourModel;
-    public Trie trie;
     private final int fieldSize;
     HashSet<String> wordList;
     HashSet<String> possibleWords;
 
     public BoggleModel(BoggleController boggleController, int fieldsize) throws IOException {
-        //this.boggleController = boggleController;
 
         this.boardModel = new BoardModel(this, fieldsize);
         this.neighbourModel = new NeighbourModel(this, fieldsize);
         this.boggleSolverModel = new BoggleSolverModel(this);
-        this.trie = new Trie(this);
         this.fieldSize = fieldsize;
         this.wordList = newWordList();
         this.possibleWords = newPossibleWords();
@@ -75,8 +71,6 @@ public class BoggleModel {
                         // add the word to the possibleWords HashSet
                         possibleWords.add(word);
 
-                        // Add the word to the tree
-                        trie.addWord(word);
                     }
 
                 }
@@ -86,7 +80,6 @@ public class BoggleModel {
 
         //foundWords.forEach(System.out::println);
         System.out.println("Found words: "+ counter);
-        System.out.println("check if possible...");
         return possibleWords;
     }
 
@@ -154,11 +147,6 @@ public class BoggleModel {
         return wordList;
     }
 
-    public void findInTree(String word){
-        System.out.println(trie.getSize());
-        System.out.println(trie.find(word));
-    }
-
 
     public String getBoardLetters(){
         return boardModel.getBoardLetters();
@@ -168,7 +156,6 @@ public class BoggleModel {
     public void resetBoard(){
         this.boardModel = new BoardModel(this, fieldSize);
         boardModel.fillBoard();
-        trie.clearTree();
         boggleSolverModel.foundWords = new HashSet<>();
         this.possibleWords = newPossibleWords();
 

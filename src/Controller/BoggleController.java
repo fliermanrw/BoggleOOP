@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -20,7 +19,6 @@ public class BoggleController {
     public GridPane boggleboardfield;
     public Pane wordfield;
     HashSet<String> wordList;
-    ArrayList<Character> neighbours = new ArrayList<>();
 
 
     @FXML
@@ -61,9 +59,7 @@ public class BoggleController {
 
 
     public void SearchStartButton() throws IOException {
-        boggleModel.findInTree("zwommen");
-        boggleModel.findInTree("zwan");
-        boggleModel.findInTree("a");
+        // do things
     }
 
     public void ResetBoardButton() {

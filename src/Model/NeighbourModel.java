@@ -110,8 +110,6 @@ class NeighbourModel {
             addtoNeighbours(id + 1);
         }
 
-        //System.out.println("xxxxxxxxxxxxxxxxxxxxx");
-
         ArrayList<Character> neighbours = new ArrayList<>();
         ArrayList<Character> temp = new ArrayList<>();
 
@@ -129,15 +127,12 @@ class NeighbourModel {
             fieldIDs.add(value);
         }
 
-        //System.out.println("nu de letters: ");
-        //System.out.println(neighbours);
         return neighbours;
 
     }
 
     private void addtoNeighbours(int fieldNumber){
         noDups.add((fieldNumber));
-        //System.out.println(fieldNumber);
 
     }
 
@@ -145,10 +140,4 @@ class NeighbourModel {
         return fieldIDs;
     }
 
-    // tests to see the neighbours
-    void getAllNeighbours(){
-        for(int count = 0; count < (fieldSize * fieldSize); count++) {
-            //TODO maybe.. do we want all neigbours or is it not necessary?
-        }
-    }
 }
